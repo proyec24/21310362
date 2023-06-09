@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamerly</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <p>GamerLy</p>
+        </div>
+        <div class="navbar">
+            <a id="login" href="login.html">Login</a>
+            <a id="registro" href="registro.html">Registro</a>
+            <a id="perfil" href="perfil.html">Perfil</a>
+            <a id="admin" href="vistaAdmin.html">Admin</a>
+            <a  href="Ubicacion.html">Ubicacion</a>
+            <a  href="Principal.html">Principal</a>
+            <a  href="Productos.html">Catalogo</a>
+        </div>
+    </div>
+    <div class="mGuicho">
+    <h1 class="titulos">Gamerly</h1>
+    </div>
+    <div>
+    <div class="caracteristicas">
+        <h2>¿Quienes somos?</h2>
+        <p>Somos una microempresa mexicana que va comenzando en el negocio de la venta de videojuegos en línea, 
+            con los recursos suficientes para convertirnos en una tienda de venta de videojuegos que puede llegar a tener un alcance gigantesco
+            con un invaluable potencial.</p>
+    </div>
+    <div class="caracteristicas"> 
+        <h2>Misión</h2>
+        <p>La misión de esta empresa consiste en vender videojuegos a un precio competente contra la competencia, ofreciendo descuentos especiales y alianzas con las marcas
+            , ganado una posición competente en el mercado. Ofreciendo un amplio catálogo, adecuado a todo tipo de público y sus distintos intereses, de la plataforma que sea en 
+            formato digital.</p>
+    </div>
+    <div class="caracteristicas">
+        <h2>Visión</h2>
+        <p>
+            Esta empresa estará posicionada entre las tiendas de videojuegos principales en el mercado, y será competidora directa de los mas grandes competidores
+                actuales, y un fuerte rival para los que vengan después, ofreciendo una de las mejores experiencias de compra en el mercado.
+        </p>
+    </div></div>
+    
+        <footer>
+                <p>Contáctanos <br>
+                3331486511 <br>
+                gamerly@contact.com</p>
+        </footer> 
+        <script>
+            window.onload = async ()=>{
+                await fetch("revisar_sesion.php",{
+                        method:"POST",
+                        headers:{
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({
+                            "session_id":localStorage.getItem("session_id"),
+                        })
+                    }).then(async (response)=>{
+                        res= await response.json();
+                        console.log(res)
+                        if(!response.ok){
+                            document.getElementById("admin").setAttribute("class","hidden");
+                            document.getElementById("perfil").setAttribute("class","hidden");
+                            return;
+                        }
+                        document.getElementById("login").setAttribute("class","hidden");
+                        document.getElementById("registro").setAttribute("class","hidden");
+                        if(res.type!="2"){
+                            document.getElementById("admin").setAttribute("class","hidden");
+                        }
+                        return;
+                    })
+                }
+        </script>    
+</body>
+</html>

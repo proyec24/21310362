@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicacion</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <p>GamerLy</p>
+        </div>
+        <div class="navbar">
+            <a id="login" href="login.html">Login</a>
+            <a id="registro" href="registro.html">Registro</a>
+            <a id="perfil" href="perfil.html">Perfil</a>
+            <a id="admin" href="vistaAdmin.html">Admin</a>
+            <a  href="Ubicacion.html">Ubicacion</a>
+            <a  href="Principal.html">Principal</a>
+            <a  href="Productos.html">Catalogo</a>
+        </div>
+    </div>
+    <div class="containerMap">
+        <div class="decoradoMapa shadow">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15109.113451692716!2d-115.80560144031483!3d37.24059298863278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80b81baaba3e8c81%3A0x970427e38e6237ae!2s%C3%81rea%2051%2C%20Nevada%2C%20EE.%20UU.!5e0!3m2!1ses-419!2smx!4v1678521109423!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+    <footer id="Pie">
+        <p>Contáctanos <br>
+        3331486511 <br>
+        gamerly@contact.com</p>
+    </footer> 
+    <script>
+        window.onload = async ()=>{
+            await fetch("revisar_sesion.php",{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        "session_id":localStorage.getItem("session_id"),
+                    })
+                }).then(async (response)=>{
+                    res= await response.json();
+                    console.log(res)
+                    if(!response.ok){
+                        document.getElementById("admin").setAttribute("class","hidden");
+                        document.getElementById("perfil").setAttribute("class","hidden");
+                        return;
+                    }
+                    document.getElementById("login").setAttribute("class","hidden");
+                    document.getElementById("registro").setAttribute("class","hidden");
+                    if(res.type!="2"){
+                        document.getElementById("admin").setAttribute("class","hidden");
+                    }
+                    return;
+                })
+            }
+    </script>   
+</body>
+</html>

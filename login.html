@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <p>GamerLy</p>
+        </div>
+        <div class="navbar">
+            <a id="login" href="login.html">Login</a>
+            <a id="registro" href="registro.html">Registro</a>
+            <a  href="Ubicacion.html">Ubicacion</a>
+            <a  href="Principal.html">Principal</a>
+            <a  href="Productos.html">Catalogo</a>
+        </div>
+    </div>
+    <div class="contenedorLogin">
+        <form class="formLogin shadow" action="#" onsubmit="return login(event)" method="post">
+            
+            <label for="correo">Correo:</label>
+            <input type="email" name="correo" id="correo">
+    
+            <label for="password">Contraseña:</label>
+            <input type="password"  name="password" id="password">
+
+            <a class="preg" href="file:///D:/21310362/registro.html">¿No te has registrado?</a>
+            <button type="submit">Iniciar sesión</button>
+        </form>
+        </div>
+        <script>
+            async function login(e){
+                e.preventDefault();
+                await fetch("login.php",{
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        "correo":document.getElementById("correo").value,
+                        "password":document.getElementById("password").value
+                    })
+                }).then(async (response)=>{
+                    res= await response.json();
+                    console.log(res)
+                    if(!response.ok){
+                        alert("Usuario no encontrado")
+                        return;
+                    }
+                    localStorage.setItem("session_id",res.session_id);
+                    if(res.type=="2"){
+                        window.location.href = "vistaAdmin.html"
+                        return;
+                    }
+                    window.location.href = "Productos.html"
+                })
+            }
+        </script>
+    <footer id="Pie">
+        <p>Contáctanos <br>
+        3331486511 <br>
+        gamerly@contact.com</p>
+    </footer> 
+</body>
+</html>
